@@ -12,9 +12,28 @@ import javax.persistence.Table;
 
 import com.project.market.product.domain.Product;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Embeddable
 public class OrderDetail {
+	private Long productId;
 	private Integer price;
 	private Integer quantity;
 	private Integer amounts;
+
+	public static OrderDetail of(Long productId, Integer price, Integer quantity) {
+		return OrderDetail.builder()
+			.productId(productId)
+			.price(price)
+			.quantity(quantity)
+			.amounts(price * quantity)
+			.build();
+	}
 }

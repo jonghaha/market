@@ -29,7 +29,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "order")
+@Table(name = "product_order")
 public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,4 +53,13 @@ public class Order {
 	@Column(name = "order_date")
 	@Builder.Default
 	private LocalDateTime orderDate = LocalDateTime.now();
+
+	public static Order of(Member member, List<OrderDetail> orderDetails, OrderState state) {
+		return Order.builder()
+			.member(member)
+			.orderDetails(orderDetails)
+			.state(state)
+			.totalAmounts(orderDetails.stream().mapToInt(OrderDetail::getAmounts).sum())
+			.build();
+	}
 }
