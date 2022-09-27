@@ -39,4 +39,8 @@ public class Image {
 	@Builder.Default
 	@Column(name = "upload_datetime")
 	private LocalDateTime uploadDatetime = LocalDateTime.now();
+
+	public static Image of(String url) {
+		return Image.builder().url(url).build();
+	}
 }
