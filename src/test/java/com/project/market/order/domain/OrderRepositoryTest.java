@@ -50,9 +50,9 @@ public class OrderRepositoryTest {
 	void save() {
 		Member member = memberRepository.findById("id01").orElseThrow();
 		Product product = productRepository.findById(1L).orElseThrow();
+		Address address = Address.builder().zipCode("234234").address1("가나시").address2("다라동 마바호").build();
 
-		orderRepository.save(Order.of(member, List.of(OrderDetail.of(product.getId(), 2, product.getPrice())),
-			OrderState.PAYMENT_WAITING));
+		orderRepository.save(Order.of(member, List.of(OrderDetail.of(product.getId(), 2, product.getPrice())), address, OrderState.ORDERED));
 
 		Order findOrder = orderRepository.findById(1L).orElseThrow();
 

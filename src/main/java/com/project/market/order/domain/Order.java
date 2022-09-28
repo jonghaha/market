@@ -6,6 +6,8 @@ import java.util.List;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Embedded;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -41,24 +43,28 @@ public class Order {
 	private Member member;
 
 	@ElementCollection(fetch = FetchType.LAZY)
-	@CollectionTable(name = "order_detail", joinColumns = @JoinColumn(name = "order_seq"))
+	@CollectionTable(name = "order_detail", joinColumns = @JoinColumn(name = "order_id"))
 	private List<OrderDetail> orderDetails;
 
 	private Integer totalAmounts;
 
+	@Embedded
+	private Address address;
+
 	@Column(name = "state")
 	@Enumerated(EnumType.STRING)
-	private OrderState state;
+	private OrderState orderState;
 
 	@Column(name = "order_date")
 	@Builder.Default
 	private LocalDateTime orderDate = LocalDateTime.now();
 
-	public static Order of(Member member, List<OrderDetail> orderDetails, OrderState state) {
+	public static Order of(Member member, List<OrderDetail> orderDetails, Address address, OrderState orderState) {
 		return Order.builder()
 			.member(member)
 			.orderDetails(orderDetails)
-			.state(state)
+			.address(address)
+			.orderState(orderState)
 			.totalAmounts(orderDetails.stream().mapToInt(OrderDetail::getAmounts).sum())
 			.build();
 	}

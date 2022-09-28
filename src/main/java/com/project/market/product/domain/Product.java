@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -41,6 +42,7 @@ public class Product {
 
 	@Builder.Default
 	@OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true)
+	@JoinColumn(name = "product_id")
 	private List<Image> images = new ArrayList<>();
 
 	public static Product mapToEntity(ProductDto productDto) {

@@ -22,4 +22,8 @@ public class Member {
 	private String id;
 	private String name;
 	private String password;
+
+	public static Member fromMemberId(String memberId) {
+		return memberId == null ? null : Member.builder().id(memberId).build();
+	}
 }
