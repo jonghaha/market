@@ -23,4 +23,14 @@ public class OrderController {
 	public CommonResponse<Order> order(@RequestBody OrderDto orderDto) {
 		return orderService.order(orderDto);
 	}
+
+	@PostMapping("/cancel")
+	public CommonResponse<Order> orderCancel(@RequestBody OrderDto orderDto) {
+		return orderService.orderCancel(orderDto);
+	}
+
+	@PostMapping("/partially-cancel")
+	public CommonResponse<Order> orderPartiallyCancel(@RequestBody OrderDto orderDto) {
+		return orderService.orderPartiallyCancel(orderDto);
+	}
 }

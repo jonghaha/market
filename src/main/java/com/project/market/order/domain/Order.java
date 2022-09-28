@@ -7,7 +7,6 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Embedded;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -67,5 +66,24 @@ public class Order {
 			.orderState(orderState)
 			.totalAmounts(orderDetails.stream().mapToInt(OrderDetail::getAmounts).sum())
 			.build();
+	}
+
+	public void cancel() {
+		this.orderState = OrderState.CANCELED;
+		for (OrderDetail detail : this.orderDetails) {
+			detail.cancel();
+		}
+	}
+
+	public void partiallyCancel(OrderDto orderDto) {
+		this.orderState = OrderState.PARTIALLY_CANCELED;
+		for (OrderDetail detail : this.orderDetails) {
+			for (OrderProduct orderProduct : orderDto.getOrderProducts()) {
+				if (detail.getProductId().equals(orderProduct.getProductId())) {
+					detail.cancel();
+					this.totalAmounts = this.totalAmounts - detail.getAmounts();
+				}
+			}
+		}
 	}
 }

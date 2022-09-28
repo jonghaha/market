@@ -11,6 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OrderDto {
+	private Long orderId;
 	private String memberId;
 	private List<OrderProduct> orderProducts;
 	private Address address;

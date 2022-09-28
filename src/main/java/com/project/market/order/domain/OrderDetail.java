@@ -27,6 +27,8 @@ public class OrderDetail {
 	private Integer price;
 	private Integer quantity;
 	private Integer amounts;
+	@Builder.Default
+	private Boolean canceled = Boolean.FALSE;
 
 	public static OrderDetail of(Long productId, Integer price, Integer quantity) {
 		return OrderDetail.builder()
@@ -35,5 +37,9 @@ public class OrderDetail {
 			.quantity(quantity)
 			.amounts(price * quantity)
 			.build();
+	}
+
+	public void cancel() {
+		this.canceled = Boolean.TRUE;
 	}
 }

@@ -4,18 +4,18 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import com.project.market.notification.application.NotificationService;
-import com.project.market.order.domain.OrderCompleteNotifyEvent;
+import com.project.market.order.domain.OrderNotifyEvent;
 
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class OrderCompleteNotifyEventHandler {
+public class OrderNotifyEventHandler {
 
 	private final NotificationService notificationService;
 
-	@EventListener(OrderCompleteNotifyEventHandler.class)
-	public void notifyComplete(OrderCompleteNotifyEvent event) {
+	@EventListener(OrderNotifyEvent.class)
+	public void notifyComplete(OrderNotifyEvent event) {
 		notificationService.SendNotification(event.getMemberId(), event.getMessage());
 	}
 }

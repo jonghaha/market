@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class OrderCompleteNotifyEvent {
+public class OrderNotifyEvent {
 	String memberId;
 	String message;
 }
